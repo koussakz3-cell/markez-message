@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#071B3A">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/png" href="/icon-192.png"><link rel="apple-touch-icon" href="/icon-192.png">
+<title>MARKEZ MESSAGE</title>
+<style>
+:root{--head:#071B3A;--bg:#071b25;--panel:#102b36;--panel2:#163844;--green:#00c896;--text:#f3fbfa;--muted:#91aaa9;--line:#24434c}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+#app{height:100dvh;display:flex;flex-direction:column;max-width:600px;margin:0 auto;position:relative}
+header{background:var(--head);padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+header.ch{padding:10px}
+.logo{display:flex;align-items:center;gap:10px;flex:1}
+.logo-icon{width:40px;height:40px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:#06251f;font-weight:bold;font-size:20px;flex:none}
+.logo-icon svg{width:36px;height:36px}
+.logo h1{font-size:18px;letter-spacing:1px}
+.logo p{color:var(--muted);font-size:11px;margin-top:3px}
+.ib{background:none;border:0;color:var(--text);font-size:21px;padding:6px 8px;border-radius:8px}
+.stt{background:var(--panel);border-bottom:1px solid var(--line);padding:6px 14px;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.cmp{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}.cmp th,.cmp td{border:1px solid var(--line);padding:7px;text-align:center}.cmp td:first-child{text-align:left;color:var(--muted)}
+.btn[disabled]{opacity:.5}
+.opt{background:var(--panel2);border-left:4px solid var(--green);border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.5;color:var(--text)}
+.opt h3{font-size:16px;color:var(--green);margin-bottom:6px}
+.d{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+main{flex:1;overflow-y:auto;min-height:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140' fill='none' stroke='%2300c896' stroke-opacity='.11' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='10' y='12' width='30' height='20' rx='6'/%3E%3Cpath d='M17 32l-4 7 11-7'/%3E%3Ccircle cx='96' cy='24' r='10'/%3E%3Cpath d='M92 24h8'/%3E%3Crect x='80' y='84' width='32' height='21' rx='6'/%3E%3Cpath d='M104 105l5 7-12-7'/%3E%3Cpath d='M22 92l6 6 11-12'/%3E%3Cpath d='M60 52a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-9 11-9 11s-9-5-9-11z'/%3E%3C/svg%3E");background-size:140px 140px}
+.st{font-size:12px;color:var(--muted);margin:14px 14px 6px}
+.sr{padding:6px 12px 10px}
+input[type=text]{width:100%;padding:12px 14px;border:1px solid #31525b;border-radius:22px;font:inherit;background:var(--bg);color:#fff;outline:none}
+input[type=text]:focus{border-color:var(--green)}
+.av{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:bold;color:#06251f;font-size:18px;object-fit:cover}
+.av.s{width:38px;height:38px;font-size:16px}
+.av.xl{width:104px;height:104px;font-size:42px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.row:active{background:var(--panel)}
+.mid{flex:1;min-width:0}
+.nm{font-weight:bold;font-size:15px}
+.pv{color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.meta{text-align:right;font-size:11px;color:var(--muted)}
+.badge{display:inline-block;background:var(--green);color:#06251f;border-radius:11px;min-width:22px;padding:2px 7px;font-size:12px;font-weight:bold;margin-top:4px}
+.empty{padding:36px 24px;text-align:center;color:var(--muted);line-height:1.5}
+.fab{position:absolute;right:16px;bottom:80px;width:56px;height:56px;border-radius:50%;border:0;background:var(--green);color:#06251f;font-size:30px;font-weight:bold;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.nv{display:flex;background:var(--panel);border-top:1px solid var(--line);justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom))}
+.nv button{background:none;border:0;color:var(--muted);font-size:11px;padding:6px 12px;border-radius:12px}
+.nv button.on{color:var(--green);background:rgba(0,200,150,.16);font-weight:bold}
+.nv b{display:block;font-size:19px;font-weight:400;margin-bottom:2px}
+.msgs{padding:15px 10px;display:flex;flex-direction:column;gap:10px}
+.day{align-self:center;font-size:10px;color:var(--muted)}
+.bubble{max-width:86%;padding:10px 11px;border-radius:13px;font-size:14px;line-height:1.45;overflow-wrap:anywhere;white-space:pre-wrap}
+.received{align-self:flex-start;background:var(--panel2);border-bottom-left-radius:3px}
+.sent{align-self:flex-end;background:#087b61;border-bottom-right-radius:3px}
+.time{display:block;text-align:right;color:#c2ded7;font-size:10px;margin-top:5px}
+.bar{display:flex;gap:7px;padding:10px;background:var(--panel);border-top:1px solid var(--line);padding-bottom:max(10px,env(safe-area-inset-bottom))}
+.bar textarea{flex:1;min-width:0;padding:12px 14px;border-radius:22px;border:1px solid #31525b;background:var(--bg);color:#fff;font:inherit;resize:none;max-height:110px;outline:none}
+.send{width:44px;height:44px;border:0;border-radius:50%;background:var(--green);color:#06251f;font-size:18px;font-weight:bold;align-self:flex-end}
+.form{padding:18px;display:flex;flex-direction:column;gap:14px}
+.form .c{display:flex;flex-direction:column;align-items:center;gap:10px}
+label{font-size:13px;color:var(--muted)}
+.btn{border:0;border-radius:12px;padding:13px;font:inherit;font-weight:bold;background:var(--green);color:#06251f}
+.btn.g{background:var(--panel2);color:var(--text)}
+.btn.r{background:none;color:#ff8a80;border:1px solid #5a3a3a}
+.note{font-size:12.5px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;line-height:1.45}
+#toast{position:fixed;left:50%;top:14px;transform:translate(-50%,-90px);background:var(--panel2);color:var(--text);padding:10px 16px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,.6);transition:transform .25s;z-index:9;max-width:90%;font-size:14px}
+#toast.on{transform:translate(-50%,0)}
+#splash{position:fixed;inset:0;z-index:99;background:var(--head);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s}#splash.out{opacity:0;pointer-events:none}#splash h1{font-size:24px;letter-spacing:2px;color:#f3fbfa}#splash p{font-size:12px;color:var(--muted);letter-spacing:1px}
+.edge{position:fixed;left:0;top:45%;width:26px;height:56px;border:0;border-radius:0 16px 16px 0;background:linear-gradient(160deg,var(--green),#0b7a8a);color:#fff;font-size:14px;opacity:.6;z-index:18;display:none;align-items:center;justify-content:center;padding:0;box-shadow:0 2px 10px rgba(0,0,0,.35)}.edge:active{opacity:1}.edge.rt{border-radius:16px 0 0 16px}
+.dv{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:19;display:none}.dv.on{display:block}
+.dr{position:fixed;top:0;bottom:0;left:0;width:84%;max-width:330px;background:var(--panel);border-right:1px solid var(--line);transform:translateX(-105%);transition:transform .25s;z-index:20;overflow-y:auto;padding:16px 12px}.dr.on{transform:none}.dr.rt{left:auto;right:0;border-right:0;border-left:1px solid var(--line);transform:translateX(105%)}.dr.rt.on{transform:none}
+.dr h2{font-size:18px;letter-spacing:1px}.dr .dm{color:var(--green);font-size:12px;margin:4px 0 8px;font-weight:bold}.dr .dh{font-size:12px;color:var(--muted);margin:14px 6px 4px}
+.it{display:flex;gap:10px;align-items:center;padding:11px 8px;border-radius:10px;font-size:14px}.it:active{background:var(--panel2)}.it.s{color:var(--muted)}
+.trb{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.3)}.trb small{display:block;font-size:10px;opacity:.7;margin-top:2px}
+select{width:100%;padding:10px;border-radius:10px;border:1px solid #31525b;background:var(--bg);color:#fff;font:inherit;margin:4px 0 8px}
+</style>
+</head>
+<body>
+<div id="splash"><div style="width:124px;height:124px;border-radius:32px;background:#00c896;display:grid;place-items:center;box-shadow:0 8px 30px rgba(0,200,150,.35)"><svg viewBox="0 0 40 40" width="104" height="104"><rect x="4" y="5" width="22" height="16" rx="4" fill="#06251f"/><path d="M8 20l-3 5 8-5z" fill="#06251f"/><path d="M9.5 17V9l5.5 5 5.5-5v8" stroke="#00c896" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="17" y="18" width="19" height="14" rx="4" fill="#00c896" stroke="#06251f" stroke-width="2"/><path d="M32 31l2.5 4.5-7-4.5z" fill="#06251f"/><circle cx="22" cy="25" r="1.6" fill="#06251f"/><circle cx="26.5" cy="25" r="1.6" fill="#06251f"/><circle cx="31" cy="25" r="1.6" fill="#06251f"/></svg></div><h1>MARKEZ MESSAGE</h1><p>MESSAGE • CONNECT • SHARE</p></div>
+<div id="app"></div>
+<div id="toast"></div>
+<div class="dv" id="dv"></div><aside class="dr" id="dr"></aside><button class="edge" id="edge" aria-label="Menu des fonctionnalités">✨</button>
+<script>
+/* Même clé de stockage que les versions 1 et 2 : l'historique est conservé */
+var KEY="markez_v1",S=null;
+try{S=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+if(!S)S={profile:null,contacts:[],msgs:{},unread:{}};S.lastId=S.lastId||0;S.tl=S.tl||{to:"fr",from:"auto"};S.cfg=S.cfg||{accent:"#00c896",size:14,cc:"+237",notif:true};
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("Stockage impossible (espace plein ?)");}}
+var view="list",cur=null,tmpPhoto=null,$=function(i){return document.getElementById(i);};
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function hhmm(t){return new Date(t).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});}
+function dayLabel(t){var d=new Date(t),n=new Date();if(d.toDateString()===n.toDateString())return"AUJOURD’HUI";var y=new Date();y.setDate(n.getDate()-1);if(d.toDateString()===y.toDateString())return"HIER";return d.toLocaleDateString("fr-FR",{day:"numeric",month:"long"}).toUpperCase();}
+var COL=["#00c896","#4fa3e0","#e08fb0","#e0b04f","#a58be0","#7fd17f","#e07a6f"];
+function avatar(p,c){c=c||"";if(p&&p.photo)return'<img class="av '+c+'" src="'+p.photo+'" alt="">';var n=(p&&p.name)||"?";return'<div class="av '+c+'" style="background:'+COL[(n.charCodeAt(0)||0)%COL.length]+'">'+esc(n.charAt(0).toUpperCase())+"</div>";}
+var tt;function toast(t){var e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on");},2800);}
+function notify(t,b){if(S.cfg&&S.cfg.notif===false)return;toast(t+" : "+b);pushNote(t,b);}
+function contact(id){return S.contacts.find(function(c){return c.id===id;});}
+function lastMsg(id){var m=S.msgs[id]||[];return m[m.length-1];}
+function readPhoto(f,cb){var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var s=160,cv=document.createElement("canvas");cv.width=cv.height=s;var m=Math.min(im.width,im.height);cv.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,s,s);cb(cv.toDataURL("image/jpeg",.75));};im.src=r.result;};r.readAsDataURL(f);}
+
+/* Éléments communs */
+var LOGO='<div class="logo"><div class="logo-icon"><svg viewBox="0 0 40 40" aria-label="Logo MARKEZ MESSAGE"><rect x="4" y="5" width="22" height="16" rx="4" fill="#06251f"/><path d="M8 20l-3 5 8-5z" fill="#06251f"/><path d="M9.5 17V9l5.5 5 5.5-5v8" stroke="#00c896" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="17" y="18" width="19" height="14" rx="4" fill="#00c896" stroke="#06251f" stroke-width="2"/><path d="M32 31l2.5 4.5-7-4.5z" fill="#06251f"/><circle cx="22" cy="25" r="1.6" fill="#06251f"/><circle cx="26.5" cy="25" r="1.6" fill="#06251f"/><circle cx="31" cy="25" r="1.6" fill="#06251f"/></svg></div><div><h1>MARKEZ MESSAGE</h1><p>MESSAGE • CONNECT • SHARE</p></div></div>';
+var LIVE=false,ES=null;function stTxt(){return'<b style="color:#00c896">'+modeName()+'</b> · <b>GRATUIT</b> · <i class="d" style="background:'+(navigator.onLine?"#e6a100":"#8a9aa0")+'"></i>'+(navigator.onLine?"Internet détecté":"Hors connexion")+" · Serveur : "+(netOff()?"désactivé (mode local)":LIVE?"connecté":S.acc?(sessionOk()?"reconnexion…":"connexion expirée"):"non connecté");}
+function shell(a,title,body,tab,extra){
+  a.innerHTML="<header>"+LOGO+'</header><div class="stt" id="st">'+stTxt()+'</div><main><p class="st">'+title+"</p>"+body+"</main>"+(extra||"")+
+  '<nav class="nv">'+[["list","💬","Messages"],["contacts","👥","Contacts"],["profile","👤","Profil"],["settings","⚙","Réglages"]].map(function(x){return'<button data-t="'+x[0]+'" class="'+(tab===x[0]?"on":"")+'"><b>'+x[1]+"</b>"+x[2]+"</button>";}).join("")+"</nav>";
+  Array.prototype.forEach.call(a.querySelectorAll(".nv button"),function(b){b.onclick=function(){view=b.getAttribute("data-t");render();};});
+}
+window.addEventListener("online",function(){if($("st"))$("st").innerHTML=stTxt();});
+window.addEventListener("offline",function(){if($("st"))$("st").innerHTML=stTxt();});
+
+function render(){
+  var a=$("app");
+  $("edge").style.display=(S.profile&&S.cfg.pos!=="hide")?"flex":"none";if(!S.profile)return renderProfile(a,true);
+  if(view==="add")return renderAdd(a);
+  if(view==="chat")return renderChat(a);
+  if(view==="contacts")return renderContacts(a);
+  if(view==="profile")return renderProfile(a,false);
+  if(view==="group")return renderGroup(a);
+  if(view==="acct")return renderAcct(a);
+  if(view==="settings")return renderSettings(a);
+  if(view==="premium")return renderPremium(a);
+  if(view==="sub")return renderSub(a);
+  renderList(a);
+}
+function bindRows(){Array.prototype.forEach.call(document.querySelectorAll(".row[data-id]"),function(r){r.onclick=function(){cur=r.getAttribute("data-id");S.unread[cur]=0;save();view="chat";render();checkReg(contact(cur));};});}
+
+function renderList(a){
+  shell(a,"MES DISCUSSIONS",'<div class="sr"><input type="text" id="q" placeholder="Rechercher une discussion"></div><div id="lst"></div>',"list",'<button class="fab" id="fab">+</button>');
+  $("fab").onclick=function(){view="add";render();};
+  function f(){var q=$("q").value.trim().toLowerCase();
+    var L=S.contacts.filter(function(c){var l=lastMsg(c.id);return!q||c.name.toLowerCase().indexOf(q)>-1||(l&&l.text.toLowerCase().indexOf(q)>-1);}).sort(function(x,y){var p=lastMsg(x.id),r=lastMsg(y.id);return(r?r.ts:0)-(p?p.ts:0);});
+    var h=L.length?"":'<div class="empty">'+(q?"Aucun résultat.":"Aucune discussion.<br>Appuyez sur <b>+</b> pour ajouter un contact.")+"</div>";
+    L.forEach(function(c){var l=lastMsg(c.id),u=S.unread[c.id]||0;h+='<div class="row" data-id="'+c.id+'">'+avatar(c)+'<div class="mid"><div class="nm">'+esc(c.name)+'</div><div class="pv">'+(l?(l.from==="me"?"Vous : ":"")+esc(l.text):"Aucun message")+'</div></div><div class="meta">'+(l?hhmm(l.ts):"")+(u?'<br><span class="badge">'+u+"</span>":"")+"</div></div>";});
+    $("lst").innerHTML=h;bindRows();}
+  $("q").oninput=f;f();
+}
+function renderContacts(a){setTimeout(friendsLoad,0);
+  shell(a,"MES CONTACTS",'<div id="fr"></div><div class="sr"><input type="text" id="q" placeholder="Rechercher un contact"></div><div id="lst"></div>',"contacts",'<button class="fab" id="fab">+</button>');
+  $("fab").onclick=function(){view="add";render();};
+  function f(){var q=$("q").value.trim().toLowerCase(),L=S.contacts.filter(function(c){return!q||c.name.toLowerCase().indexOf(q)>-1;}).sort(function(x,y){return x.name.localeCompare(y.name);});
+    var h=L.length?"":'<div class="empty">'+(q?"Aucun résultat.":"Aucun contact. Appuyez sur <b>+</b>.")+"</div>";
+    L.forEach(function(c){h+='<div class="row" data-id="'+c.id+'">'+avatar(c)+'<div class="mid"><div class="nm">'+esc(c.name)+'</div><div class="pv">'+(c.group?"Groupe":"Contact local")+'</div></div></div>';});
+    $("lst").innerHTML=h;bindRows();}
+  $("q").oninput=f;f();
+}
+function renderProfile(a,first){
+  var p=S.profile||{name:"",user:"",photo:null};tmpPhoto=p.photo;
+  var body='<div class="form"><div class="c"><div id="ph">'+avatar({name:p.name||"?",photo:p.photo},"xl")+'</div><input type="file" id="file" accept="image/*" hidden><button class="btn g" id="pick">Choisir une photo</button></div>'+
+  '<div><label for="nm">Votre nom</label><input type="text" id="nm" maxlength="30" value="'+esc(p.name)+'" placeholder="Ex. Marc"></div>'+
+  '<div><label for="us">Nom d’utilisateur</label><input type="text" id="us" maxlength="20" autocapitalize="none" value="'+esc(p.user||"")+'" placeholder="ex. marc_237"></div>'+
+  '<button class="btn" id="ok">'+(first?"Commencer":"Enregistrer")+"</button>"+
+  (first?"":'<button class="btn g" id="nt">Activer les notifications</button><button class="btn r" id="rs">Effacer toutes les données</button>')+
+  '<div class="note"><b>Important :</b> tout est enregistré uniquement dans ce téléphone. Le nom d’utilisateur n’est pas encore vérifié comme unique : cela demandera un serveur.</div></div>';
+  if(first)a.innerHTML="<header>"+LOGO+"</header><main><p class=st>BIENVENUE : CRÉEZ VOTRE PROFIL</p>"+body+"</main>";else shell(a,"MON PROFIL",body,"profile");
+  $("pick").onclick=function(){$("file").click();};
+  $("file").onchange=function(){var f=this.files[0];if(!f)return;readPhoto(f,function(d){tmpPhoto=d;$("ph").innerHTML=avatar({name:$("nm").value||"?",photo:d},"xl");});};
+  $("ok").onclick=function(){
+    var n=$("nm").value.trim(),u=$("us").value.trim().toLowerCase();
+    if(!n)return toast("Entrez votre nom");
+    if(u&&!/^[a-z0-9_]{3,20}$/.test(u))return toast("Nom d’utilisateur : 3 à 20 lettres minuscules, chiffres ou _");
+    S.profile={name:n,user:u,photo:tmpPhoto};save();view="list";render();toast("Profil enregistré");
+  };
+  if(!first){
+    $("nt").onclick=function(){if(!("Notification"in window))return toast("Notifications non disponibles ici");Notification.requestPermission().then(function(r){toast(r==="granted"?"Notifications autorisées":"Notifications refusées");});};
+    $("rs").onclick=function(){if(confirm("Effacer le profil, les contacts et tous les messages ?")){S={profile:null,contacts:[],msgs:{},unread:{}};save();view="list";render();}};
+  }
+}
+function normPhone(p){p=String(p).replace(/[\s().\-]/g,"");if(p.indexOf("00")===0)p="+"+p.slice(2);if(p&&p.charAt(0)!=="+"){var cc=(S.cfg&&S.cfg.cc)||"+237";p=cc+(cc==="+237"?p:p.replace(/^0/,""));}return p;}
+function okPhone(p){return/^\+[1-9]\d{6,14}$/.test(p);}
+function api(path,o){o=o||{};var h={"Content-Type":"application/json"};if(S.acc)h.Authorization="Bearer "+S.acc.token;return fetch(path,{method:o.body?"POST":"GET",headers:h,body:o.body?JSON.stringify(o.body):undefined}).then(function(r){return r.json().then(function(j){j._ok=r.ok;return j;});});}
+function upd(){if($("st"))$("st").innerHTML=stTxt();}
+function refreshView(){if(view==="chat")renderChat($("app"));else if(view==="list")renderList($("app"));}
+function sessionOk(){return!!(S.acc&&S.acc.exp&&Date.now()<S.acc.exp);}
+function refreshSession(){api("/api/refresh",{body:{}}).then(function(j){if(j._ok){S.acc.plan=j.plan;S.acc.until=j.until;S.acc.exp=j.exp;save();}else if(S.acc){toast("Connexion expirée : reconnectez-vous");if(ES)ES.close();ES=null;LIVE=false;delete S.acc;save();render();}}).catch(function(){});}
+function sendOne(c,m){if(!S.acc||!sessionOk()||!c||(!c.phone&&!c.gid)||netOff())return Promise.resolve();return upl(m).then(function(fid){return api("/api/send",{body:c.gid?{gid:c.gid,text:m.text,cid:m.id}:{to:c.phone,text:m.text,cid:m.id,fid:fid}});}).then(function(j){if(j._ok){m.st="sent";save();refreshView();}else if(j.error&&c.id===cur)toast(j.error);}).catch(function(){});}
+function flush(){var p=Promise.resolve();S.contacts.forEach(function(c){(S.msgs[c.id]||[]).forEach(function(m){if(m.from==="me"&&m.st!=="sent"&&m.st!=="sms"&&(c.phone||c.gid))p=p.then(function(){return sendOne(c,m);});});});}
+function ingest(list){list.forEach(function(m){if(m.id<=S.lastId)return;S.lastId=m.id;var c=m.gid?S.contacts.find(function(x){return x.gid===m.gid;}):S.contacts.find(function(x){return x.phone===m.from;});if(!c){c=m.gid?{id:uid(),name:m.gname||"Groupe",gid:m.gid,group:true,members:m.members||[]}:{id:uid(),name:m.name||m.from,phone:m.from};S.contacts.push(c);S.msgs[c.id]=[];}var nm={id:uid(),from:"them",text:m.text||"",ts:m.ts,fn:m.gid?m.name:undefined};(S.msgs[c.id]=S.msgs[c.id]||[]).push(nm);if(m.file)getFile(m.file,nm);if(!(view==="chat"&&cur===c.id)){S.unread[c.id]=(S.unread[c.id]||0)+1;notify(c.name,m.text);}});save();refreshView();}
+function sync(){api("/api/sync?since="+S.lastId).then(function(j){if(j.msgs)ingest(j.msgs);}).catch(function(){});}
+function startLive(){if(!S.acc||!sessionOk()||!window.EventSource||netOff())return;if(ES)ES.close();ES=new EventSource("/api/events?token="+encodeURIComponent(S.acc.token));ES.onopen=function(){LIVE=true;upd();refreshSession();sync();flush();};ES.onerror=function(){LIVE=false;upd();};ES.addEventListener("msg",function(e){try{ingest([JSON.parse(e.data)]);}catch(x){}});}
+function renderAcct(a){
+  var ac=S.acc;
+  a.innerHTML='<header class="ch"><button class="ib" id="bk">←</button><div class="logo"><h1 style="font-size:17px">Mon compte</h1></div></header><main><div class="form">'+
+  (ac?'<div class="opt"><h3>Connecté</h3>Numéro : '+esc(ac.phone)+'<br>Nom : '+esc(ac.name)+'</div><button class="btn r" id="lo">Se déconnecter</button>':
+  '<div><label for="aph">Numéro de téléphone (avec l’indicatif, ex. +237…)</label><input type="text" id="aph" inputmode="tel" placeholder="+237 6XX XX XX XX"></div><div><label for="anm">Votre nom (pour l’inscription)</label><input type="text" id="anm" maxlength="30"></div><div><label for="apw">Mot de passe (6 caractères minimum)</label><input type="text" id="apw" autocapitalize="none" style="-webkit-text-security:disc"></div><button class="btn" id="rg">S’inscrire</button><button class="btn g" id="li">Se connecter</button>')+
+  '<div class="note">Le numéro n’est pas vérifié par SMS : n’importe qui peut s’inscrire avec n’importe quel numéro. Utilisez ce serveur seulement pour des tests. Le mode local reste disponible sans compte.</div></div></main>';
+  $("bk").onclick=function(){view="settings";render();};
+  if(ac){$("lo").onclick=function(){if(ES)ES.close();ES=null;LIVE=false;delete S.acc;save();render();};return;}
+  function go(k){var ph=normPhone($("aph").value);if(!okPhone(ph))return toast("Numéro invalide");api("/api/"+k,{body:{phone:ph,password:$("apw").value,name:$("anm").value}}).then(function(j){if(!j._ok)return toast(j.error||"Erreur");S.acc={phone:j.phone,token:j.token,name:j.name,plan:j.plan,until:j.until,exp:j.exp};save();startLive();view="settings";render();toast("Connecté : "+j.phone);}).catch(function(){toast("Serveur injoignable : ouvrez l’application depuis l’adresse du serveur.");});}
+  $("rg").onclick=function(){go("register");};$("li").onclick=function(){go("login");};
+}
+function limitBytes(){return((S.acc&&S.acc.plan==="premium")?800:300)*1048576;}
+function usedBytes(){var n=0;try{n=JSON.stringify(S).length;}catch(e){}Object.keys(S.msgs).forEach(function(k){S.msgs[k].forEach(function(m){if(m.att)n+=m.att.size;});});return n;}
+function idb(){return new Promise(function(ok,ko){var r=indexedDB.open("markez",1);r.onupgradeneeded=function(){r.result.createObjectStore("f");};r.onsuccess=function(){ok(r.result);};r.onerror=function(){ko();};});}
+function idbPut(k,b){return idb().then(function(d){return new Promise(function(ok,ko){var t=d.transaction("f","readwrite");t.objectStore("f").put(b,k);t.oncomplete=ok;t.onerror=ko;});});}
+function idbGet(k){return idb().then(function(d){return new Promise(function(ok,ko){var q=d.transaction("f").objectStore("f").get(k);q.onsuccess=function(){ok(q.result);};q.onerror=ko;});});}
+function idbDel(k){idb().then(function(d){d.transaction("f","readwrite").objectStore("f").delete(k);}).catch(function(){});}
+function shrink(f){return new Promise(function(ok,ko){var u=URL.createObjectURL(f),im=new Image();im.onload=function(){var m=1280,r=Math.min(1,m/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=Math.round(im.width*r);cv.height=Math.round(im.height*r);cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);URL.revokeObjectURL(u);cv.toBlob(function(b){b?ok(b):ko();},"image/jpeg",.72);};im.onerror=ko;im.src=u;});}
+function toB64(b){return new Promise(function(ok,ko){var r=new FileReader();r.onload=function(){ok(String(r.result).split(",")[1]);};r.onerror=ko;r.readAsDataURL(b);});}
+function attach(f){var c=contact(cur);if(!c)return;var img=/^image\//.test(f.type);(img?shrink(f):Promise.resolve(f)).then(function(b){if(b.size>3000000)return toast("Fichier trop gros (3 Mo maximum)");if(usedBytes()+b.size>limitBytes())return toast("Stockage plein ("+limitBytes()/1048576+" Mo). Supprimez des conversations ou passez à Premium.");var key=uid();return idbPut(key,b).then(function(){var m={id:uid(),from:"me",text:img?"📷 Photo":"📎 "+f.name,ts:Date.now(),att:{key:key,name:f.name||"photo.jpg",type:b.type||f.type,size:b.size}};(S.msgs[cur]=S.msgs[cur]||[]).push(m);save();renderChat($("app"));sendOne(c,m);});}).catch(function(){toast("Fichier impossible à lire");});}
+function upl(m){if(!m.att)return Promise.resolve(undefined);if(m.att.sid)return Promise.resolve(m.att.sid);return idbGet(m.att.key).then(toB64).then(function(d){return api("/api/upload",{body:{name:m.att.name,type:m.att.type,data:d}});}).then(function(j){if(!j._ok){toast(j.error||"Envoi du fichier impossible");return Promise.reject();}m.att.sid=j.fid;save();return j.fid;});}
+function getFile(f,nm){if(usedBytes()+f.size>limitBytes()){nm.text+=" (stockage plein : pièce jointe non reçue)";return;}fetch("/api/file/"+f.id,{headers:{Authorization:"Bearer "+S.acc.token}}).then(function(r){return r.ok?r.blob():Promise.reject();}).then(function(b){var key=uid();return idbPut(key,b).then(function(){nm.att={key:key,name:f.name,type:f.type,size:b.size};save();refreshView();});}).catch(function(){nm.text+=" (pièce jointe indisponible)";save();refreshView();});}
+function attHtml(m){if(!m.att)return"";if(/^image\//.test(m.att.type))return'<img data-k="'+m.att.key+'" style="max-width:100%;border-radius:10px;display:block;margin-bottom:4px" alt="photo">';return'<a href="#" data-f="'+m.att.key+'" data-n="'+esc(m.att.name)+'" style="color:inherit;text-decoration:underline;display:block;margin-bottom:4px">📎 '+esc(m.att.name)+" ("+Math.ceil(m.att.size/1024)+" Ko)</a>";}
+function loadAtts(){Array.prototype.forEach.call(document.querySelectorAll("img[data-k]"),function(i){idbGet(i.getAttribute("data-k")).then(function(b){if(b)i.src=URL.createObjectURL(b);});});Array.prototype.forEach.call(document.querySelectorAll("a[data-f]"),function(l){l.onclick=function(e){e.preventDefault();idbGet(l.getAttribute("data-f")).then(function(b){if(!b)return;var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=l.getAttribute("data-n");a.click();});};});}
+function featCard(){var ok=["Profil : nom, photo, nom d’utilisateur","Contacts avec numéro de téléphone, recherche","Discussions et historique conservés dans le téléphone","Compte avec numéro (non vérifié par SMS)","Messages par Internet via le serveur, mis en attente sans réseau","Affichage MODE LOCAL / MODE INTERNET selon la connexion","Photos et fichiers (3 Mo maximum)","Stockage conservé : 300 Mo gratuit, 800 Mo Premium","Connexion mémorisée : 5 jours gratuit, 7 jours Premium","Notifications dans l’application","Traducteur gratuit (MyMemory) : bouton Traduire sous chaque message","Inviter par SMS un numéro non inscrit","Personnalisation : couleur, taille du texte, indicatif par défaut","Propositions de contacts à la saisie d’un numéro (comptes volontaires)","Groupes de discussion (texte)","Suggestions d’amis (membres de vos groupes, comptes volontaires)","Sauvegarde et restauration (fichier ou cloud, chiffrées)","Choix du mode : automatique, local ou local SMS (SMS préparé dans votre application SMS)","Notifications : autorisation et test","Partage de l’application par lien","Installation comme application (écran d’accueil)","Premium : activé par l’administrateur (paiement automatique bientôt)"],soon=["Vérification du numéro par SMS","Mode local réel entre deux téléphones","Paiement automatique Orange Money, MoMo, carte","Publicités (version gratuite)","Application installable (APK)"];return'<div class="opt"><h3>✨ Fonctionnalités</h3><b>Écrites dans cette version :</b><br>'+ok.map(function(x){return"✅ "+x;}).join("<br>")+'<br><br><b>Pas encore disponibles :</b><br>'+soon.map(function(x){return"🚧 "+x;}).join("<br>")+'<br><br><small>Les fonctions « écrites » ont été vérifiées côté serveur ; l’application n’a pas encore été testée sur un téléphone.</small></div>';}
+function openDr(){buildDr();$("dr").classList.add("on");$("dv").classList.add("on");}
+function closeDr(){$("dr").classList.remove("on");$("dv").classList.remove("on");}
+function buildDr(){
+  var go=[["💬","Discussions","list"],["👥","Contacts","contacts"],["👤","Mon profil","profile"],["🔑","Compte (numéro de téléphone)","acct"],["📎","Photos et fichiers : bouton 📎 dans une discussion",""],["💾","Stockage 300 Mo / 800 Mo","settings"],["🔐","Connexion mémorisée 5 / 7 jours","settings"],["📡","Mode local / Internet","settings"],["⭐","Premium et abonnement","premium"],["📖","Mode d’emploi","settings"],["🌍","Traducteur gratuit : langues dans Réglages","settings"],["⚙","Personnalisation et installation","settings"],["👥","Créer un groupe","group"],["☁","Sauvegarde et restauration","settings"],["🔔","Notifications","settings"],["🤝","Suggestions d’amis (onglet Contacts)","contacts"],["📤","Partager l’application par lien","share"]],
+  soon=["🛡 Vérification du numéro par SMS","📶 Mode local réel entre deux téléphones","💳 Paiement automatique Orange Money, MoMo, carte","📢 Publicités (version gratuite)","📱 Application installable (APK)"];
+  var plan=S.acc&&S.acc.plan==="premium"?"PREMIUM":"GRATUIT";
+  $("dr").innerHTML='<h2>MARKEZ MESSAGE</h2><p class="dm">'+modeName()+" · "+plan+'</p><p class="dh">✅ Écrites (pas encore testées sur téléphone)</p>'+go.map(function(x){return'<div class="it" data-v="'+x[2]+'"><span>'+x[0]+"</span><span>"+x[1]+"</span></div>";}).join("")+'<p class="dh">🚧 Pas encore disponibles</p>'+soon.map(function(x){return'<div class="it s">'+x+"</div>";}).join("");
+  Array.prototype.forEach.call($("dr").querySelectorAll(".it"),function(e){e.onclick=function(){closeDr();if(!S.profile)return;if(e.classList.contains("s"))return toast("Pas encore disponible");var v=e.getAttribute("data-v");if(v==="share")return shareApp();if(v){view=v;render();}else toast("Ouvrez une discussion, puis touchez 📎");};});
+}
+(function(){var tx=0;$("edge").onclick=openDr;$("dv").onclick=closeDr;document.addEventListener("touchstart",function(e){tx=e.touches[0].clientX;},{passive:true});document.addEventListener("touchend",function(e){var dx=e.changedTouches[0].clientX-tx;var R=(S.cfg.pos||"l-m").charAt(0)==="r",on=$("dr").classList.contains("on");if(!R&&tx<24&&dx>60&&S.profile)openDr();else if(R&&tx>innerWidth-24&&dx<-60&&S.profile)openDr();else if(on&&((!R&&dx<-60)||(R&&dx>60)))closeDr();},{passive:true});})();
+var LANGS=[["fr","Français"],["en","Anglais"],["es","Espagnol"],["pt","Portugais"],["de","Allemand"],["ar","Arabe"],["zh-CN","Chinois"]];
+function trCard(){var o=LANGS.map(function(l){return'<option value="'+l[0]+'">'+l[1]+"</option>";}).join(""),q=S.trq&&S.trq.day===new Date().toDateString()?S.trq.n:0;return'<div class="opt"><h3>🌍 Traducteur gratuit</h3><label>Traduire vers</label><select id="trt">'+o+'</select><label>Langue d’origine</label><select id="trs"><option value="auto">Détection automatique</option>'+o+'</select>Aujourd’hui : '+q+' caractères traduits depuis ce téléphone.<br><small>Service gratuit MyMemory : environ 5 000 caractères par jour et par connexion (à vérifier). Le texte du message est envoyé à ce service pour être traduit : ne traduisez pas de message confidentiel. Qualité variable. Le gbaya et le duala ne sont pas pris en charge dans cette version.</small></div>';}
+function trBind(){if(!$("trt"))return;$("trt").value=S.tl.to;$("trs").value=S.tl.from;$("trt").onchange=function(){S.tl.to=this.value;save();};$("trs").onchange=function(){S.tl.from=this.value;save();};}
+function bindTr(){var P=$("pst");if(P)P.onclick=function(e){e.preventDefault();var t=prompt("Collez le texte du SMS reçu :");if(t&&t.trim()){(S.msgs[cur]=S.msgs[cur]||[]).push({id:uid(),from:"them",text:t.trim(),ts:Date.now(),sms:true});save();renderChat($("app"));}};Array.prototype.forEach.call(document.querySelectorAll("a.tl"),function(l){l.onclick=function(e){e.preventDefault();var id=l.getAttribute("data-m"),m=(S.msgs[cur]||[]).find(function(x){return x.id===id;});if(m)translateMsg(m);};});}
+function translateMsg(m){
+  var tl=S.tl||{to:"fr",from:"auto"};
+  if(m.tr&&m.tr.lang===tl.to)return toast("Déjà traduit");
+  if(!navigator.onLine)return toast("Pas de connexion : traduction impossible");
+  if(!S.trOk){if(!confirm("Pour traduire, le texte de ce message sera envoyé au service gratuit MyMemory. Continuer ?"))return;S.trOk=1;save();}
+  var txt=m.text.slice(0,450),day=new Date().toDateString();if(!S.trq||S.trq.day!==day)S.trq={day:day,n:0};
+  var lp=(tl.from==="auto"?"Autodetect":tl.from)+"|"+tl.to;
+  fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(txt)+"&langpair="+encodeURIComponent(lp)).then(function(r){return r.json();}).then(function(j){
+    var t=j&&j.responseData&&j.responseData.translatedText;
+    if(!t||String(j.responseStatus)!=="200")throw new Error(String(j&&j.responseDetails||"erreur"));
+    if(/MYMEMORY WARNING/i.test(t))throw new Error("quota du jour atteint");
+    m.tr={lang:tl.to,text:t+(txt.length<m.text.length?" […]":"")};S.trq.n+=txt.length;save();renderChat($("app"));
+  }).catch(function(e){toast("Traduction impossible : "+(e.message||"erreur"));});
+}
+function applyCfg(){var c=S.cfg;document.documentElement.style.setProperty("--green",c.accent);var st=$("cfgst");if(!st){st=document.createElement("style");st.id="cfgst";document.head.appendChild(st);}st.textContent=".bubble{font-size:"+c.size+"px}";var p=(c.pos||"l-m").split("-"),e=$("edge"),d=$("dr");e.classList.toggle("rt",p[0]==="r");d.classList.toggle("rt",p[0]==="r");e.style.left=p[0]==="r"?"auto":"0";e.style.right=p[0]==="r"?"0":"auto";e.style.top={t:"14%",m:"45%",b:"76%"}[p[1]]||"45%";e.style.display=(S.profile&&c.pos!=="hide")?"flex":"none";}
+function opts(a){return a.map(function(x){return'<option value="'+x[0]+'">'+x[1]+"</option>";}).join("");}
+var CCS=[["+237","Cameroun +237"],["+33","France +33"],["+1","USA / Canada +1"],["+44","Royaume-Uni +44"],["+234","Nigeria +234"],["+241","Gabon +241"],["+242","Congo +242"],["+235","Tchad +235"],["+236","Centrafrique +236"],["+225","Côte d’Ivoire +225"],["+221","Sénégal +221"],["+32","Belgique +32"],["+49","Allemagne +49"],["+86","Chine +86"]];
+function cfgCard(){return'<div class="opt"><h3>🎨 Personnalisation</h3><label>Mode de communication</label><select id="cfm">'+opts([["auto","Automatique (Internet quand il est disponible)"],["local","Local : hors connexion, messages en attente"],["sms","Local SMS : sans Internet, par SMS"]])+'</select><small>« Local » garde vos messages en attente, sans aucune donnée mobile. « Local SMS » prépare chaque message en SMS dans votre application SMS : vous touchez Envoyer, et le SMS est facturé selon votre forfait. Les SMS reçus ne sont pas lus automatiquement. La liaison directe entre deux téléphones n’est pas encore disponible.</small><label>Couleur principale</label><select id="cfa">'+opts([["#00c896","Vert"],["#4fa3e0","Bleu"],["#f0a030","Orange"],["#e07ab0","Rose"],["#a58be0","Violet"]])+'</select><label>Taille du texte des messages</label><select id="cfs">'+opts([[13,"Petit"],[14,"Normal"],[16,"Grand"],[18,"Très grand"]])+'</select><label>Indicatif par défaut (numéro saisi sans « + »)</label><select id="cfc">'+opts(CCS)+'</select><label>Notifications dans l’application</label><select id="cfn">'+opts([["1","Activées"],["0","Désactivées"]])+'</select><label>Apparaître dans les suggestions de contacts (nécessite un compte)</label><select id="cfv">'+opts([["0","Non"],["1","Oui"]])+'</select><label>Position du bouton ✨ (menu des fonctionnalités)</label><select id="cfp">'+opts([["l-t","Gauche, en haut"],["l-m","Gauche, au milieu"],["l-b","Gauche, en bas"],["r-t","Droite, en haut"],["r-m","Droite, au milieu"],["r-b","Droite, en bas"],["hide","Masqué (glisser depuis le bord gauche)"]])+'</select><small>Pour joindre un autre pays, saisissez le numéro complet avec « + » et l’indicatif, par exemple +33…</small></div>';}
+function pwaCard(){return'<div class="opt"><h3>📲 Installer comme application</h3>Ajoute MARKEZ MESSAGE à votre écran d’accueil : elle s’ouvre en plein écran, comme une application. Elle fonctionne grâce à votre navigateur (ce n’est pas un fichier APK).<br><button class="btn" id="ins" style="margin-top:8px">Installer</button><button class="btn g" id="shr" style="margin-top:8px">📤 Partager l’application (lien)</button></div>';}
+function cfgBind(){if(!$("cfa"))return;var c=S.cfg;$("cfa").value=c.accent;$("cfs").value=String(c.size);$("cfc").value=c.cc;$("cfn").value=c.notif===false?"0":"1";
+  $("cfa").onchange=function(){c.accent=this.value;save();applyCfg();};$("cfs").onchange=function(){c.size=parseInt(this.value,10);save();applyCfg();};$("cfc").onchange=function(){c.cc=this.value;save();};$("cfn").onchange=function(){c.notif=this.value==="1";save();};$("cfp").value=c.pos||"l-m";$("cfp").onchange=function(){c.pos=this.value;save();applyCfg();};$("cfv").value=c.vis?"1":"0";$("cfv").onchange=function(){var v=this.value==="1";if(!S.acc||!sessionOk()){this.value="0";return toast("Connectez-vous d’abord");}api("/api/visible",{body:{v:v}}).then(function(j){if(j._ok){c.vis=v;save();}}).catch(function(){toast("Serveur injoignable");});};
+  $("shr").onclick=shareApp;bkBind();notifBind();$("cfm").value=c.mode||"auto";$("cfm").onchange=function(){c.mode=this.value;save();if(c.mode!=="auto"){if(ES)ES.close();ES=null;LIVE=false;upd();}else startLive();};$("ins").onclick=function(){if(DIP){DIP.prompt();DIP=null;}else toast("Chrome : menu ⋮, puis « Ajouter à l’écran d’accueil »");};}
+var DIP=null;window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();DIP=e;});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(function(){});
+function checkReg(c){if(!S.acc||!c||!c.phone||!sessionOk())return;api("/api/lookup?phone="+encodeURIComponent(c.phone)).then(function(j){if(j._ok&&c.reg!==!!j.exists){c.reg=!!j.exists;save();if(view==="chat"&&cur===c.id)renderChat($("app"));}}).catch(function(){});}
+function inviteBar(c){if(c.phone&&c.reg===false)return'<div class="note">Ce numéro n’utilise pas encore MARKEZ MESSAGE : vos messages resteront en attente. <a href="sms:'+c.phone+'?body='+encodeURIComponent("Rejoins-moi sur MARKEZ MESSAGE : "+location.origin)+'" style="color:var(--green)">Inviter par SMS</a> (le SMS est envoyé depuis votre téléphone, selon votre forfait).</div>';return"";}
+function addBind(){var cp=$("cp");if(!cp)return;var t=null;cp.oninput=function(){clearTimeout(t);t=setTimeout(suggest,350);};$("cn").oninput=suggest;$("gb").onclick=function(){view="group";render();};}
+var SG=[];
+function drawSg(L){SG=L;var e=$("sg");if(!e)return;e.innerHTML=L.length?'<p class="st" style="margin:10px 0 4px">Propositions ('+L.length+')</p>'+L.map(function(x,i){return'<div class="it" data-i="'+i+'">'+avatar({name:x.name},"s")+"<span>"+esc(x.name)+"<br><small>"+esc(x.phone||"")+(x.local?" · déjà dans vos contacts":" · utilise MARKEZ MESSAGE")+"</small></span></div>";}).join(""):"";
+  Array.prototype.forEach.call(e.querySelectorAll(".it"),function(n){n.onclick=function(){var x=SG[n.getAttribute("data-i")];if(x.local){cur=x.local;view="chat";render();}else{$("cn").value=x.name;$("cp").value=x.phone;$("sg").innerHTML="";}};});}
+function suggest(){var d=$("cp").value.replace(/\D/g,""),nm=$("cn").value.trim().toLowerCase(),L=[];
+  S.contacts.forEach(function(c){if(c.group)return;var cd=(c.phone||"").replace(/\D/g,"");if((d.length>=3&&cd.indexOf(d)>-1)||(nm.length>=2&&c.name.toLowerCase().indexOf(nm)>-1))L.push({name:c.name,phone:c.phone,local:c.id});});
+  drawSg(L);
+  if(d.length>=5&&S.acc&&sessionOk()&&navigator.onLine)api("/api/suggest?q="+d).then(function(j){if(!j.list||!$("sg"))return;var X=j.list.filter(function(r){return!S.contacts.some(function(c){return c.phone===r.phone;});});drawSg(L.concat(X));}).catch(function(){});}
+function renderGroup(a){var L=S.contacts.filter(function(c){return c.phone&&!c.group;});
+  a.innerHTML='<header class="ch"><button class="ib" id="bk">←</button><div class="logo"><h1 style="font-size:17px">Nouveau groupe</h1></div></header><main><div class="form"><div><label for="gn">Nom du groupe</label><input type="text" id="gn" maxlength="40" placeholder="Ex. Famille"></div><p class="st" style="margin:0">Membres (contacts avec numéro, inscrits sur MARKEZ MESSAGE)</p>'+(L.length?L.map(function(c){return'<label class="it" style="color:var(--text)"><input type="checkbox" value="'+esc(c.phone)+'"> '+esc(c.name)+" <small>"+esc(c.phone)+"</small></label>";}).join(""):'<div class="note">Ajoutez d’abord des contacts avec leur numéro.</div>')+'<button class="btn" id="gok">Créer le groupe</button><div class="note">Les messages de groupe sont en texte seulement. Il faut un compte connecté, et les membres doivent être inscrits.</div></div></main>';
+  $("bk").onclick=function(){view="add";render();};
+  $("gok").onclick=function(){var n=$("gn").value.trim(),ms=Array.prototype.map.call(document.querySelectorAll("input[type=checkbox]:checked"),function(x){return x.value;});
+    if(!n)return toast("Entrez un nom de groupe");if(!S.acc||!sessionOk())return toast("Connectez-vous d’abord (Réglages)");if(!ms.length)return toast("Choisissez au moins un membre");
+    api("/api/group",{body:{name:n,members:ms}}).then(function(j){if(!j._ok)return toast(j.error||"Erreur");var c={id:uid(),name:n,gid:j.gid,group:true,members:j.members};S.contacts.push(c);S.msgs[c.id]=[];save();cur=c.id;view="chat";render();}).catch(function(){toast("Serveur injoignable");});};
+}
+function shareApp(){var u=location.origin,loc=/^(localhost|127\.|192\.168\.)/.test(location.hostname)||location.protocol!=="https:";
+  if(loc){toast("Mettez d’abord l’application en ligne : ce lien ne marcherait que sur ce téléphone");return;}
+  var d={title:"MARKEZ MESSAGE",text:"Rejoins-moi sur MARKEZ MESSAGE :",url:u};
+  if(navigator.share)navigator.share(d).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(u).then(function(){toast("Lien copié : collez-le dans un message");}).catch(function(){toast(u);});else toast(u);}
+function friendsLoad(){var e=$("fr");if(!e||!S.acc||!sessionOk()||!navigator.onLine)return;
+  var have={},L=[],seen={},mates=[];S.contacts.forEach(function(c){if(c.phone)have[c.phone]=1;});have[S.acc.phone]=1;
+  S.contacts.forEach(function(c){(c.members||[]).forEach(function(p){if(!have[p]&&!seen[p]){seen[p]=1;mates.push(p);}});});
+  var jobs=mates.slice(0,5).map(function(p){return api("/api/lookup?phone="+encodeURIComponent(p)).then(function(j){if(j.exists)L.push({phone:p,name:j.name,why:"membre d’un de vos groupes"});}).catch(function(){});});
+  jobs.push(api("/api/discover").then(function(j){(j.list||[]).forEach(function(r){if(!have[r.phone]&&!seen[r.phone]){seen[r.phone]=1;L.push({phone:r.phone,name:r.name,why:"a choisi d’apparaître dans les suggestions"});}});}).catch(function(){}));
+  Promise.all(jobs).then(function(){if(!$("fr")||!L.length)return;
+    $("fr").innerHTML='<div class="opt" style="margin:10px 12px"><h3>🤝 Suggestions d’amis</h3>'+L.slice(0,8).map(function(x,i){return'<div class="it" style="padding:6px 0">'+avatar({name:x.name},"s")+'<span style="flex:1">'+esc(x.name)+"<br><small>"+esc(x.phone)+" · "+x.why+'</small></span><button class="btn g" data-i="'+i+'" style="padding:6px 10px">Ajouter</button></div>';}).join("")+"</div>";
+    Array.prototype.forEach.call($("fr").querySelectorAll("button[data-i]"),function(b){b.onclick=function(){var x=L[b.getAttribute("data-i")],c={id:uid(),name:x.name,phone:x.phone,reg:true};S.contacts.push(c);S.msgs[c.id]=[];save();toast(x.name+" ajouté");renderContacts($("app"));};});});}
+function b64(u){var s="";u.forEach(function(x){s+=String.fromCharCode(x);});return btoa(s);}
+function unb64(t){return Uint8Array.from(atob(t),function(c){return c.charCodeAt(0);});}
+function keyFrom(pw,salt){if(!window.crypto||!crypto.subtle)return Promise.reject(new Error("https"));return crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]).then(function(k){return crypto.subtle.deriveKey({name:"PBKDF2",salt:salt,iterations:150000,hash:"SHA-256"},k,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);});}
+function encBk(txt,pw){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));return keyFrom(pw,salt).then(function(k){return crypto.subtle.encrypt({name:"AES-GCM",iv:iv},k,new TextEncoder().encode(txt));}).then(function(c){return JSON.stringify({v:1,salt:b64(salt),iv:b64(iv),data:b64(new Uint8Array(c))});});}
+function decBk(o,pw){return keyFrom(pw,unb64(o.salt)).then(function(k){return crypto.subtle.decrypt({name:"AES-GCM",iv:unb64(o.iv)},k,unb64(o.data));}).then(function(p){return new TextDecoder().decode(p);});}
+function bkData(){var o=JSON.parse(JSON.stringify(S));delete o.acc;return JSON.stringify(o);}
+function applyBk(txt){var o=JSON.parse(txt);if(!o||!o.contacts||!o.msgs)throw new Error("Fichier invalide");if(!confirm("Remplacer les données actuelles par cette sauvegarde ?"))return;var acc=S.acc;S=o;if(acc)S.acc=acc;S.lastId=S.lastId||0;S.tl=S.tl||{to:"fr",from:"auto"};S.cfg=S.cfg||{accent:"#00c896",size:14,cc:"+237",notif:true};save();applyCfg();view="list";render();toast("Sauvegarde restaurée");}
+function readBk(txt){var o;try{o=JSON.parse(txt);}catch(e){return toast("Fichier illisible");}
+  if(o.v===1&&o.data){var pw=prompt("Mot de passe de la sauvegarde :");if(!pw)return;decBk(o,pw).then(applyBk).catch(function(){toast("Mot de passe incorrect, fichier abîmé ou https requis");});}else{try{applyBk(txt);}catch(e){toast(e.message);}}}
+function exportBk(){var pw=prompt("Mot de passe pour protéger la sauvegarde (laissez vide pour ne pas chiffrer) :");if(pw===null)return;
+  var go=function(t){var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"application/json"}));a.download="markez-sauvegarde-"+new Date().toISOString().slice(0,10)+".json";a.click();toast("Sauvegarde enregistrée (sans les photos ni fichiers)");};
+  if(pw)encBk(bkData(),pw).then(go).catch(function(){toast("Chiffrement impossible ici (https requis)");});else go(bkData());}
+function cloudBk(){if(!S.acc||!sessionOk())return toast("Connectez-vous d’abord");var pw=prompt("Mot de passe pour chiffrer la sauvegarde cloud (obligatoire, ne le perdez pas) :");if(!pw)return;
+  encBk(bkData(),pw).then(function(t){return api("/api/backup",{body:{data:t}});}).then(function(j){toast(j._ok?"Sauvegarde cloud enregistrée":(j.error||"Erreur"));}).catch(function(){toast("Impossible (serveur injoignable ou https requis)");});}
+function restoreCloud(){if(!S.acc||!sessionOk())return toast("Connectez-vous d’abord");api("/api/backup").then(function(j){if(!j._ok)return toast(j.error||"Aucune sauvegarde");readBk(j.data);}).catch(function(){toast("Serveur injoignable");});}
+function bkCard(){return'<div class="opt"><h3>💾 Sauvegarde et restauration</h3>Sauvegarde vos contacts, conversations et réglages (pas les photos ni les fichiers).<br><button class="btn g" id="bx" style="margin-top:8px">Exporter dans un fichier</button><button class="btn g" id="bi" style="margin-top:8px">Importer un fichier</button><button class="btn g" id="bc" style="margin-top:8px">Sauvegarder dans le cloud</button><button class="btn g" id="br" style="margin-top:8px">Restaurer depuis le cloud</button><input type="file" id="bf" accept=".json,application/json" hidden><small>Sans le mot de passe, une sauvegarde chiffrée ne peut pas être ouverte. Dans le cloud, le chiffrement se fait sur votre téléphone : le serveur ne voit pas le contenu. Limite : 2 Mo.</small></div>';}
+function bkBind(){if(!$("bx"))return;$("bx").onclick=exportBk;$("bc").onclick=cloudBk;$("br").onclick=restoreCloud;$("bi").onclick=function(){$("bf").click();};$("bf").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){readBk(String(r.result));};r.readAsText(f);this.value="";};}
+function netOff(){return!!(S.cfg&&(S.cfg.mode==="local"||S.cfg.mode==="sms"));}
+function modeName(){return LIVE?"MODE INTERNET":(S.cfg&&S.cfg.mode==="sms"?"MODE LOCAL SMS":"MODE LOCAL");}
+function smsOut(c,m){if(!c||!c.phone)return toast("Ce contact n’a pas de numéro : SMS impossible");m.st="sms";save();renderChat($("app"));location.href="sms:"+c.phone+"?body="+encodeURIComponent(m.text);}
+function smsBar(){return S.cfg&&S.cfg.mode==="sms"?'<div class="note">Mode local SMS : chaque message s’ouvre dans votre application SMS et vous touchez Envoyer (facturé selon votre forfait). Les SMS reçus ne sont pas lus automatiquement : <a href="#" id="pst" style="color:var(--green)">coller un SMS reçu</a>.</div>':"";}
+function notifState(){return!("Notification"in window)?"non disponibles sur ce navigateur":Notification.permission==="granted"?"autorisées":Notification.permission==="denied"?"refusées (à réactiver dans les réglages de Chrome)":"pas encore autorisées";}
+function pushNote(t,b){if(!("Notification"in window)||Notification.permission!=="granted")return false;var o={body:b,icon:"/icon-192.png",vibrate:[120,60,120]};
+  if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration)navigator.serviceWorker.getRegistration().then(function(r){if(r)return r.showNotification(t,o);new Notification(t,o);}).catch(function(){});else{try{new Notification(t,o);}catch(e){}}return true;}
+function notifCard(){return'<div class="opt"><h3>🔔 Notifications</h3>État : '+notifState()+'.<br><button class="btn g" id="nq" style="margin-top:8px">Autoriser les notifications</button><button class="btn g" id="nt2" style="margin-top:8px">Tester une notification</button><small>Elles s’affichent quand un message arrive pendant que l’application est ouverte ou en arrière-plan. Application fermée : pas encore possible (il faudra un service de notifications à distance). Vous pouvez les couper avec « Notifications dans l’application » plus haut.</small></div>';}
+function notifBind(){if(!$("nq"))return;$("nq").onclick=function(){if(!("Notification"in window))return toast("Notifications non disponibles ici");Notification.requestPermission().then(function(r){toast(r==="granted"?"Notifications autorisées":"Notifications refusées");render();});};$("nt2").onclick=function(){if(!pushNote("MARKEZ MESSAGE","Ceci est un test de notification"))toast("Autorisez d’abord les notifications");};}
+function cmpHtml(){return'<table class="cmp"><tr><th></th><th>Gratuit</th><th>Premium</th></tr><tr><td>Prix</td><td>0</td><td>3000 FCFA/mois</td></tr><tr><td>Stockage</td><td>300 Mo</td><td>800 Mo</td></tr><tr><td>Publicités</td><td>Oui</td><td>Non</td></tr><tr><td>Connexion mémorisée</td><td>5 jours</td><td>7 jours</td></tr></table>';}
+function storCard(){var n=usedBytes(),lim=limitBytes(),p=Math.max(1,Math.min(100,n/lim*100));var t=n<1048576?(n/1024).toFixed(1)+" Ko":(n/1048576).toFixed(2)+" Mo";return'<div class="opt"><h3>💾 Stockage : '+t+' sur '+(lim/1048576)+' Mo</h3><div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden"><div style="height:8px;width:'+p+'%;background:var(--green)"></div></div><p style="margin-top:8px">Messages, photos et fichiers conservés sur ce téléphone. Limite : 300 Mo en gratuit, 800 Mo en Premium. Sur le téléphone, cette limite peut être contournée ; sur le serveur, elle est imposée par le serveur.</p></div>';}
+function renderPremium(a){
+  var f=["Plus de traductions (selon le coût du service)","Sauvegarde cloud plus grande","Plus de fichiers conservés (800 Mo)","Fichiers partagés plus volumineux","Personnalisation avancée de l’interface","Options de confidentialité supplémentaires","Gestion avancée des conversations","Synchronisation et restauration avancées","Aucune publicité"];
+  a.innerHTML='<header class="ch"><button class="ib" id="bk">←</button><div class="logo"><h1 style="font-size:17px">MARKEZ MESSAGE PREMIUM</h1></div></header><main><div class="form"><div class="opt"><h3>⭐ Premium : 3000 FCFA par mois</h3>Abonnement annuel : prix à définir.'+cmpHtml()+'</div><div class="opt"><h3>Ce que Premium apportera</h3>'+f.map(function(x){return"• "+x;}).join("<br>")+'</div><button class="btn" disabled>Paiement automatique au mois : bientôt</button><button class="btn g" disabled>Paiement automatique à l’année : bientôt</button><div class="note">Le paiement automatique (Orange Money, MoMo, carte) n’est pas encore en place. Pour l’instant, Premium est activé à la main par l’administrateur, après un vrai paiement vérifié. Il ne peut pas être débloqué depuis l’application.</div></div></main>';
+  $("bk").onclick=function(){view="settings";render();};
+}
+function renderSub(a){
+  a.innerHTML='<header class="ch"><button class="ib" id="bk">←</button><div class="logo"><h1 style="font-size:17px">Mon abonnement</h1></div></header><main><div class="form"><div class="opt"><h3>Version : '+(S.acc&&S.acc.plan==="premium"?"PREMIUM":"GRATUIT")+'</h3>'+(S.acc&&S.acc.plan==="premium"&&S.acc.until?"Actif jusqu’au "+new Date(S.acc.until).toLocaleDateString("fr-FR")+".":"Aucun abonnement actif.")+'</div><div class="note">Le paiement automatique n’est pas encore en place : l’administrateur active Premium à la main, après un vrai paiement vérifié. Une fois activé, la date de fin s’affiche ici.</div><button class="btn g" id="bk2">Retour aux réglages</button></div></main>';
+  $("bk").onclick=$("bk2").onclick=function(){view="settings";render();};
+}
+function renderSettings(a){
+  var cmp='<table class="cmp"><tr><th></th><th>Gratuit</th><th>Premium</th></tr><tr><td>Prix</td><td>0</td><td>3000 FCFA/mois</td></tr><tr><td>Stockage</td><td>300 Mo</td><td>800 Mo</td></tr><tr><td>Publicités</td><td>Oui</td><td>Non</td></tr><tr><td>Connexion mémorisée</td><td>5 jours</td><td>7 jours</td></tr></table>';
+  var body='<div class="form">'+
+  cfgCard()+notifCard()+pwaCard()+bkCard()+trCard()+featCard()+'<div class="opt"><h3>📡 Mode actuel : '+modeName()+'</h3>'+(S.acc?"Compte : "+esc(S.acc.phone)+".":"Aucun compte connecté.")+' Le mode Internet s’active quand vous êtes connecté à votre compte et que le serveur répond. Sans réseau, le mode local reste utilisable.<br><button class="btn g" id="va" style="margin-top:8px">'+(S.acc?"Mon compte":"Se connecter / S’inscrire")+'</button></div>'+
+  '<div class="opt"><h3>⭐ Ma version : GRATUIT</h3>Premium est prévu, mais pas encore disponible. Aucun paiement n’est possible. Voici les différences prévues :'+cmp+'<button class="btn" id="vp">Voir Premium</button><button class="btn g" id="vs" style="margin-top:8px">Gérer mon abonnement</button></div>'+
+  storCard()+'<div class="opt"><h3>🔐 Connexion mémorisée : '+(S.acc?(sessionOk()?"active":"expirée"):"non active")+'</h3>'+(S.acc?"Valable jusqu’au "+new Date(S.acc.exp).toLocaleString("fr-FR")+" ("+(S.acc.plan==="premium"?"7 jours, Premium":"5 jours, gratuit")+"). Chaque fois que vous êtes connecté, le délai repart de zéro. Passé ce délai sans réseau, le mode local reste utilisable mais les fonctions Internet sont bloquées jusqu’à la reconnexion.":"Connectez-vous à votre compte : 5 jours en gratuit, 7 jours en Premium, valable seulement dans l’application.")+' Le décompte affiché ici peut être contourné en changeant la date du téléphone : c’est le serveur qui fait foi.</div>'+
+  '<div class="opt"><h3>📖 Mode d’emploi</h3>1. Onglet Profil : entrez votre nom, votre photo et un nom d’utilisateur.<br>2. Onglet Contacts ou bouton + : ajoutez un contact avec son numéro de téléphone (avec l’indicatif, ex. +237…) pour lui écrire par Internet.<br>3. Ouvrez la discussion et écrivez : le message est enregistré. Il est marqué « en attente », puis « envoyé au serveur » si vous avez un compte et si le contact a un numéro.<br>4. Bouton 🧪 : crée un faux message reçu, pour tester.<br>5. Champ de recherche : en haut des listes.<br>6. Bouton 🗑 : supprime un contact et sa conversation.<br>7. Bouton 📎 : envoie une photo ou un fichier (3 Mo maximum).<br>8. Réglages, puis « Se connecter / S’inscrire » : créez un compte avec votre numéro.<br>9. Sous un message, « 🌍 Traduire » le traduit dans la langue choisie dans Réglages (traduction automatique).<br>10. Vos données restent dans ce téléphone. Si vous effacez les données de Chrome, elles disparaissent.</div>'+
+  '<div class="opt"><h3>🚧 Pas encore disponible</h3> vérification du numéro par SMS, sauvegarde et restauration, mode local sans Internet entre deux téléphones, paiement et abonnement Premium, notifications application fermée, publicités.</div></div>';
+  shell(a,"RÉGLAGES",body,"settings");
+  $("va").onclick=function(){view="acct";render();};trBind();cfgBind();$("vp").onclick=function(){view="premium";render();};$("vs").onclick=function(){view="sub";render();};
+}
+function renderAdd(a){setTimeout(addBind,0);
+  a.innerHTML='<header class="ch"><button class="ib" id="bk">←</button><div class="logo"><h1 style="font-size:17px">Nouveau contact</h1></div></header><main><div class="form"><div><label for="cn">Nom du contact</label><input type="text" id="cn" maxlength="30" placeholder="Ex. Tecno Pop 6"></div><div><label for="cp">Numéro de téléphone (avec l’indicatif, ex. +237…)</label><input type="text" id="cp" inputmode="tel" placeholder="+237 6XX XX XX XX"></div><div id="sg"></div><button class="btn" id="ok">Ajouter</button><button class="btn g" id="gb">👥 Créer un groupe</button><div class="note">Pour l’instant, un contact est une fiche enregistrée sur ce téléphone. La recherche d’utilisateurs réels demandera un serveur.</div></div></main>';
+  $("bk").onclick=function(){view="list";render();};
+  $("ok").onclick=function(){var n=$("cn").value.trim(),p=$("cp").value.trim();if(!n)return toast("Entrez un nom");if(p){p=normPhone(p);if(!okPhone(p))return toast("Numéro invalide");}var c={id:uid(),name:n};if(p)c.phone=p;S.contacts.push(c);S.msgs[c.id]=[];save();cur=c.id;view="chat";render();if(p&&S.acc)api("/api/lookup?phone="+encodeURIComponent(p)).then(function(j){c.reg=!!j.exists;save();toast(j.exists?"Ce numéro utilise MARKEZ MESSAGE":"Numéro pas encore inscrit : message en attente");if(view==="chat"&&cur===c.id)renderChat($("app"));}).catch(function(){});};
+}
+function renderChat(a){
+  var c=contact(cur);if(!c){view="list";return render();}
+  var h='<header class="ch"><button class="ib" id="bk">←</button>'+avatar(c,"s")+'<div class="logo" style="display:block;min-width:0"><h1 style="font-size:15px">'+esc(c.name)+'</h1><p style="color:var(--green);font-size:10px">● '+(c.group?"Groupe · "+(c.members?c.members.length:"?")+" membres":"Local · envoi réseau pas encore disponible")+'</p></div><button class="ib" id="sim" title="Simuler un message reçu">🧪</button><button class="ib" id="del" title="Supprimer">🗑</button></header><main id="mm"><div class="msgs">'+inviteBar(c)+smsBar()+'';
+  var last="";
+  (S.msgs[cur]||[]).forEach(function(m){var d=dayLabel(m.ts);if(d!==last){h+='<div class="day">'+d+"</div>";last=d;}
+    h+='<div class="bubble '+(m.from==="me"?"sent":"received")+'">'+(m.fn?'<b style="font-size:11px;color:var(--green)">'+esc(m.fn)+"</b><br>":"")+attHtml(m)+(m.att?"":esc(m.text))+(m.tr?'<div class="trb">🌍 '+esc(m.tr.text)+"<small>Traduction automatique ("+esc(m.tr.lang)+")</small></div>":"")+'<span class="time">'+(m.sim?"simulé · ":m.sms?"SMS · ":"")+hhmm(m.ts)+(m.from==="me"?(m.st==="sent"?" · ✓ envoyé au serveur":m.st==="sms"?" · 📩 SMS préparé (à confirmer dans votre application SMS)":" · ⏳ en attente"):"")+(m.att?"":' · <a href="#" class="tl" data-m="'+m.id+'" style="color:inherit">🌍 Traduire</a>')+"</span></div>";});
+  h+='</div></main><div class="bar"><button class="ib" id="at" style="font-size:22px;display:'+(c.group?"none":"inline-block")+'">📎</button><input type="file" id="fi" hidden><textarea id="tx" rows="1" placeholder="Écrire un message..."></textarea><button class="send" id="sd">➤</button></div>';
+  a.innerHTML=h;var mm=$("mm");mm.scrollTop=mm.scrollHeight;loadAtts();bindTr();
+  $("bk").onclick=function(){view="list";render();};$("sd").onclick=send;$("sim").onclick=simulate;$("at").onclick=function(){$("fi").click();};$("fi").onchange=function(){if(this.files[0])attach(this.files[0]);this.value="";};
+  $("tx").oninput=function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,110)+"px";};
+  $("del").onclick=function(){if(confirm("Supprimer ce contact et toute la conversation ?")){(S.msgs[cur]||[]).forEach(function(m){if(m.att)idbDel(m.att.key);});S.contacts=S.contacts.filter(function(x){return x.id!==cur;});delete S.msgs[cur];delete S.unread[cur];save();view="list";render();}};
+}
+function send(){var t=$("tx").value.trim();if(!t)return;var m={id:uid(),from:"me",text:t,ts:Date.now()};(S.msgs[cur]=S.msgs[cur]||[]).push(m);save();renderChat($("app"));$("tx").focus();sendOne(contact(cur),m);if(S.cfg&&S.cfg.mode==="sms")smsOut(contact(cur),m);}
+/* SIMULATION : faux message reçu pour tester l'affichage et la notification */
+var FAKE=["Salut, ça va ?","Tu es où ?","Je t’appelle dans 5 minutes.","Bien reçu 👍","On se voit ce soir ?"];
+function simulate(){var c=contact(cur),t=FAKE[Math.floor(Math.random()*FAKE.length)];(S.msgs[cur]=S.msgs[cur]||[]).push({id:uid(),from:"them",text:t,ts:Date.now(),sim:true});save();renderChat($("app"));notify(c.name,t);}
+setTimeout(function(){var s=$("splash");if(!s)return;s.classList.add("out");setTimeout(function(){s.remove();},600);},1500);applyCfg();render();startLive();window.addEventListener("online",function(){upd();startLive();});
+</script>
+</body>
+</html>
